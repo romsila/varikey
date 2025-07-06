@@ -12,8 +12,8 @@
 #include "keymatrix.hpp"
 #include "keymatrix_queue.hpp"
 
-#define NUM_COLS 5
 #define NUM_ROWS 3
+#define NUM_COLS 5
 #define DEBOUNCE_TICKS 0
 
 const uint8_t row_pins[NUM_ROWS] = {2, 3, 4};
@@ -46,29 +46,20 @@ void keymatrix_scan(void)
     {
         gpio_put(row_pins[r], 1);
         sleep_us(5);
-        
+
         for (int c = 0; c < NUM_COLS; ++c)
         {
-            // printf("row=%d col=%d\n", r, c);
-
             const bool status = (gpio_get(col_pins[c]) == 1);
             gpio_put(25, status);
-
-            // if (status)
-            // {
-            //     printf("TASTE! row=%d col=%d\n", r, c);
-            // }
 
             const bool previous = key_now[r][c];
 
             if (status != previous)
             {
-                //printf("row%d col%d is%d\n", c + 1, r + 1, status);
                 debounce_counter[r][c]++;
                 if (debounce_counter[r][c] >= DEBOUNCE_TICKS)
                 {
                     key_now[r][c] = status;
-                    //printf("KEY S%d R%d C%d\n", status, r + 1, c + 1);
 
                     debounce_counter[r][c] = 0;
                 }
@@ -80,7 +71,6 @@ void keymatrix_scan(void)
         }
 
         gpio_put(row_pins[r], 0);
-
 
         // Aktives Entladen: alle COLs kurz auf Output und 0
         for (int c = 0; c < NUM_COLS; ++c)
@@ -96,7 +86,6 @@ void keymatrix_scan(void)
             gpio_set_dir(col_pins[c], GPIO_IN);
             gpio_pull_down(col_pins[c]);
         }
-
 
         sleep_us(5);
     }
@@ -118,11 +107,10 @@ void keymatrix_events(void)
             {
                 key_last[r][c] = now; // ← wichtig: sofort aktualisieren
 
-                keymatrix::KeyEvent::Type type = now ? keymatrix::KeyEvent::Type::PRESS : keymatrix::KeyEvent::Type::RELEASE;
-                keymatrix::push_event(type, col_idx, row_idx);
-
+                keymatrix::KeyEvent::Type event_type = now ? keymatrix::KeyEvent::Type::PRESS : keymatrix::KeyEvent::Type::RELEASE;
+                keymatrix::KeyEvent tmp_event(event_type, row_idx, col_idx);
+                keymatrix::push_event(tmp_event);
             }
-            
         }
     }
 }

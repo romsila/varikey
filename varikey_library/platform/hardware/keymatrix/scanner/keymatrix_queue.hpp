@@ -32,7 +32,6 @@ namespace keymatrix
     };
 
     void init_queue();
-    bool push_event(KeyEvent::Type type, uint8_t row, uint8_t col);
     bool push_event(const KeyEvent &event);
     bool has_event(void);
     bool pop_event(KeyEvent &event);
