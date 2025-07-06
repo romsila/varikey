@@ -15,7 +15,7 @@ namespace engine::backlight::settings
         using Color = platform::hardware::smartled::Color;
 
         static const PROGRAM DEFAULT_MODE = PROGRAM::TURBO;
-        static const uint16_t DEFAULT_MOUNT_TIMEOUT = 15000;
+        static const uint64_t DEFAULT_MOUNT_TIMEOUT = 15000;
         static constexpr Color MOUNTED_BACKLIGHT_LEFT = {.rgb = {.r = 0x00, .g = 0x0f, .b = 0x0f}};
         static constexpr Color MOUNTED_BACKLIGHT_RIGHT = {.rgb = {.r = 0x00, .g = 0x0e, .b = 0x1f}};
         static const uint16_t BLINK_ALERT_TIMEOUT = 250;

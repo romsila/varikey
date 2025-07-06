@@ -55,6 +55,21 @@ namespace engine::keypad
         case KEY_ID::KEY_10:
             engine::handler::push_key_event(_identifier, _state);
             break;
+        case KEY_ID::KEY_11:
+            engine::handler::push_key_event(_identifier, _state);
+            break;
+        case KEY_ID::KEY_12:
+            engine::handler::push_key_event(_identifier, _state);
+            break;
+        case KEY_ID::KEY_13:
+            engine::handler::push_key_event(_identifier, _state);
+            break;
+        case KEY_ID::KEY_14:
+            engine::handler::push_key_event(_identifier, _state);
+            break;
+        case KEY_ID::KEY_15:
+            engine::handler::push_key_event(_identifier, _state);
+            break;
 
         case KEY_ID::KEY_70:
             engine::handler::push_key_event(_identifier, _state);

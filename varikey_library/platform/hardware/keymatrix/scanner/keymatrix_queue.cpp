@@ -17,12 +17,6 @@ namespace keymatrix
         queue_init(&event_queue, sizeof(KeyEvent), KEY_EVENT_QUEUE_SIZE); // bis zu 32 Events
     }
 
-    bool push_event(KeyEvent::Type type, uint8_t row, uint8_t col)
-    {
-        KeyEvent evt = {type, row, col};
-        return queue_try_add(&event_queue, &evt);
-    }
-
     bool push_event(const KeyEvent &event)
     {
         return queue_try_add(&event_queue, &event);

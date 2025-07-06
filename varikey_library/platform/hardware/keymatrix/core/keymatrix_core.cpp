@@ -39,7 +39,7 @@ namespace platform::hardware
             }
             if (event.row > 0 && event.row <= 3 && event.col > 0 && event.col <= 5)
             {
-                *_identifier = static_cast<uint8_t>((event.row - 1) * 5 + event.col);
+                *_identifier = static_cast<uint8_t>((event.col - 1) * 3 + event.row);
             }
             else
             {
