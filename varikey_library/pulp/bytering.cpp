@@ -13,7 +13,6 @@ static void bytering_test(void);
 static void randtest(void);
 #endif
 
-
 extern void bytering_init(buffer_t *const buf, uint8_t *const _space, size_t const _size)
 {
     buf->chunk.space = _space;
@@ -22,7 +21,6 @@ extern void bytering_init(buffer_t *const buf, uint8_t *const _space, size_t con
     buf->in = 0;
     buf->out = 0;
 }
-
 
 extern size_t bytering_write(buffer_t *const _buf, uint8_t const _value)
 {
@@ -47,7 +45,6 @@ extern size_t bytering_write(buffer_t *const _buf, uint8_t const _value)
     return 1;
 }
 
-
 extern size_t bytering_read(buffer_t *const _buf, uint8_t *const _value)
 {
     if ((_buf->number_of_free_items == _buf->chunk.size) && (_buf->in == _buf->out))
@@ -70,7 +67,6 @@ extern size_t bytering_read(buffer_t *const _buf, uint8_t *const _value)
 #endif
     return 1;
 }
-
 
 extern size_t bytering_copy(buffer_t *const _from, buffer_t *const _to)
 {
@@ -95,7 +91,7 @@ extern size_t bytering_peek(buffer_t *const _buf, const size_t _cursor, uint8_t 
     }
 
     // attention: position can be "over the border"
-    uint8_t position = (_buf->out + _cursor);
+    size_t position = (_buf->out + _cursor);
     // truncate position to the buffer size
     position &= (_buf->chunk.size - 1);
 
@@ -119,7 +115,6 @@ extern size_t bytering_peek(buffer_t *const _buf, const size_t _cursor, uint8_t 
     *_value = _buf->chunk.space[position];
     return 1;
 }
-
 
 #ifdef DEBUG_BYTE_RING
 static void bytering_test(void)
@@ -180,7 +175,7 @@ static void bytering_test(void)
     result1 = bytering_write(&tx_buffer, '5');
     result1 = bytering_copy(&tx_buffer, &rx_buffer);
 }
-#endif 
+#endif
 
 #ifdef DEBUG_BYTE_RING
 static void randtest(void)
@@ -213,4 +208,4 @@ static void randtest(void)
         }
     }
 }
-#endif 
+#endif

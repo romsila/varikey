@@ -20,5 +20,6 @@ namespace platform::hardware
 
     bool KeymatrixScanner::perform(void)
     {
+        return true;
     }
 }

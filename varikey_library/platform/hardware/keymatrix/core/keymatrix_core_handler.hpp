@@ -7,7 +7,7 @@
 #pragma once
 
 #include "keymatrix_core_event.hpp"
-#include "keypad_keycode.hpp"
+#include "keypad_mapping.hpp"
 
 namespace platform::hardware
 {

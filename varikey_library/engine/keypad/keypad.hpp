@@ -6,14 +6,15 @@
 
 #pragma once
 
-#include "keypad_keycode.hpp"
+#include "keypad_key_state.hpp"
+#include "keypad_mapping.hpp"
 #include "keypad_modifiers.hpp"
 
 namespace engine::keypad
 {
-    extern void switch_key(const KEY_ID, const STATE);
-    extern void press_key(const KEY_ID);
-    extern void release_ley(const KEY_ID);
+    extern void switch_key(const key::Identifier, const key::State);
+    extern void press_key(const key::Identifier);
+    extern void release_key(const key::Identifier);
 
     extern void set_mapping(const TABLE);
     extern const TABLE get_mapping(void);
@@ -22,9 +23,9 @@ namespace engine::keypad
     extern void enable_cups(const bool);
     extern void enable_scroll(const bool);
 
-    extern void perform(const KEY_ID);
+    extern void perform(const key::Identifier);
     extern void reset(void);
 
-    extern const uint8_t id2int(const KEY_ID);
-    extern const KEY_ID int2id(const uint8_t);
+    extern const uint8_t id2int(const key::Identifier);
+    extern const key::Identifier int2id(const uint8_t);
 }

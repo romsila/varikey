@@ -77,15 +77,15 @@ namespace engine::hci::cmd::keypad
                 break;
             case IDENTIFIER::KEYCODE:
             {
-                const engine::keypad::KEY_ID key_code_id = _msg->keypad.key.code;
-                if (key_code_id != engine::keypad::KEY_ID::UNDEFINED)
+                const engine::keypad::key::Identifier key_code_id = _msg->keypad.key.code;
+                if (key_code_id != engine::keypad::key::Identifier::UNDEFINED)
                 {
                     if (_msg->keypad.function == engine::payload::keypad::FUNCTION::CLICK ||
                         _msg->keypad.function == engine::payload::keypad::FUNCTION::PUSH)
                     {
                         engine::keypad::set_modifier(_msg->keypad.key.modifier);
                         engine::keypad::press_key(key_code_id);
-                        engine::keypad::release_ley(key_code_id);
+                        engine::keypad::release_key(key_code_id);
                     }
                     else if (_msg->keypad.function == engine::payload::keypad::FUNCTION::PRESS)
                     {
@@ -94,7 +94,7 @@ namespace engine::hci::cmd::keypad
                     }
                     else if (_msg->keypad.function == engine::payload::keypad::FUNCTION::RELEASE)
                     {
-                        engine::keypad::release_ley(key_code_id);
+                        engine::keypad::release_key(key_code_id);
                     }
                 }
                 break;

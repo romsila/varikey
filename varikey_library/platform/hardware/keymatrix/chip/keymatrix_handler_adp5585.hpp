@@ -7,7 +7,7 @@
 #pragma once
 
 #include "keymatrix_event_adp5585.hpp"
-#include "keypad_keycode.hpp"
+#include "keypad_mapping.hpp"
 
 namespace platform::hardware
 {
@@ -21,6 +21,6 @@ namespace platform::hardware
     {
         virtual void event_handler(const platform::hardware::adp5585::event_t) = 0;
 
-        void push_wheel_turn(const TRIGGER, const engine::keypad::STATE);
+        void push_wheel_turn(const TRIGGER, const engine::keypad::key::State);
     };
 }

@@ -10,13 +10,18 @@
 
 #include "display_font.hpp"
 #include "display_image.hpp"
+#include "keypad_table.hpp"
 
 namespace engine::defines
 {
     struct Varikey15SBLA
     {
-        static const bool ENABLE_SERAIL_INTERFACE_ON_START = true;
+        static const bool ENABLE_SERAIL_INTERFACE_ON_START = false;
         static const bool ENABLE_USB_INTERFACE_ON_START = true;
+
+        static const keypad::TABLE DEFAULT_MAPPING_TABLE = keypad::TABLE::EMBEDDED_BOX;
+        static const uint16_t DEFAULT_CLICK_MS{128};
+        static const uint16_t DEFAULT_PUSH_MS{384};
 
         static constexpr const char *INTRO = "VARIKEY";
         static const display::ICON LOGO = display::ICON::VARIKEY_LOGO;

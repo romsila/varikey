@@ -14,7 +14,7 @@
 #include "engine.hpp"
 #include "engine_variant.hpp"
 #include "keypad.hpp"
-#include "keypad_keycode.hpp"
+#include "keypad_mapping.hpp"
 #include "keypad_modifiers.hpp"
 #include "usb_descriptors.hpp"
 #include "varikey.hpp"
@@ -66,8 +66,8 @@ namespace engine::handler
         }
     }
 
-    extern void push_key_event(const engine::keypad::KEY_ID _identifier,
-                               const engine::keypad::STATE _state)
+    extern void push_key_event(const engine::keypad::key::Identifier _identifier,
+                               const engine::keypad::key::State _state)
     {
         const engine::keypad::TABLE table = engine::keypad::get_mapping();
         const engine::keypad::MODIFIER modifier = engine::keypad::get_modifier();
@@ -76,7 +76,7 @@ namespace engine::handler
 
         payload::keypad::content_t key_event = {
             .identifier = engine::payload::keypad::IDENTIFIER::KEYCODE,
-            .function = engine::keypad::transfer_state<engine::keypad::STATE, engine::payload::keypad::FUNCTION>(_state),
+            .function = engine::keypad::transfer_state<engine::keypad::key::State, engine::payload::keypad::FUNCTION>(_state),
             .value = {
                 .modifier = modifier.value,
                 .code = key_code,

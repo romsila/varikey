@@ -6,10 +6,13 @@
 
 #include "keypad_modifiers.hpp"
 
+namespace
+{
+    engine::keypad::MODIFIER modifier;
+}
+
 namespace engine::keypad
 {
-    MODIFIER modifier;
-
     extern void enable_shift(const bool _enable)
     {
         if (_enable)

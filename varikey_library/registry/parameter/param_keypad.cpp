@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "keypad_keycode_type.hpp"
+#include "keypad_mapping.hpp"
 #include "param_keypad.hpp"
 
 namespace registry::parameter::keypad
@@ -16,8 +16,8 @@ namespace registry::parameter::keypad
 
     void register_t::initialize(void)
     {
-        value.click_ms = engine::Keycode::DEFAULT_CLICK_MS;
-        value.push_ms = engine::Keycode::DEFAULT_PUSH_MS;
+        value.click_ms = engine::keypad::Mapping::DEFAULT_CLICK_MS;
+        value.push_ms = engine::keypad::Mapping::DEFAULT_PUSH_MS;
     }
 
     void register_t::deserialize(uint8_t const *const _space)

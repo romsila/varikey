@@ -1,3 +1,5 @@
+# Copyright (c) 2025, Roman Koch, koch.roman@gmail.com
+# SPDX-License-Identifier: MIT
 
 set(LIBRARY_SOURCE_LIST
     ${VARIKEY_LIBRARY_DIR}/engine/backlight/backlight.cpp
@@ -53,10 +55,7 @@ set(LIBRARY_SOURCE_LIST
     ${VARIKEY_LIBRARY_DIR}/engine/interface/payload/payload_parameter.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/interface/payload/payload_reset.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/interface/payload/payload_temperature.cpp
-    ${VARIKEY_LIBRARY_DIR}/engine/keypad/keypad_keycode_10bwdb.cpp
-    ${VARIKEY_LIBRARY_DIR}/engine/keypad/keypad_keycode_15sbla.cpp
-    ${VARIKEY_LIBRARY_DIR}/engine/keypad/keypad_keycode_varikey.cpp
-    ${VARIKEY_LIBRARY_DIR}/engine/keypad/keypad_keycode.cpp
+    ${VARIKEY_LIBRARY_DIR}/engine/keypad/keypad_mapping.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/keypad/keypad_modifiers.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/keypad/keypad.cpp
     ${VARIKEY_LIBRARY_DIR}/platform/board/board_assembly.cpp

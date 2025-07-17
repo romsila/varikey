@@ -10,14 +10,14 @@
 
 #include "macros.hpp"
 
-#include "keypad_keycode.hpp"
+#include "keypad_mapping.hpp"
 #include "keypad_modifiers.hpp"
 #include "payload_identifier.hpp"
 
 namespace engine::payload::keypad
 {
     using TABLE = engine::keypad::TABLE;
-    using KEY_ID = engine::keypad::KEY_ID;
+    using KEY_ID = engine::keypad::key::Identifier;
     using MODIFIER = engine::keypad::MODIFIER;
 
     enum class IDENTIFIER : uint8_t

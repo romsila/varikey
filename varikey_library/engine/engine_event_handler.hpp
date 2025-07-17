@@ -9,6 +9,7 @@
 #include <queue>
 
 #include "engine_event.hpp"
+#include "keypad_key_state.hpp"
 
 namespace engine::handler
 {
@@ -22,7 +23,7 @@ namespace engine::handler
 
     extern void perform(void);
 
-    extern void push_key_event(const engine::keypad::KEY_ID, const engine::keypad::STATE);
+    extern void push_key_event(const engine::keypad::key::Identifier, const engine::keypad::key::State);
     extern void push_gpio_event(const platform::board::IDENTIFIER, const platform::board::VALUE, const uint32_t);
     extern void push_gadget_event(const payload::gadget::FUNCTION);
 

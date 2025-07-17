@@ -11,13 +11,13 @@ namespace platform::hardware
 {
     struct keycode_item_t
     {
-        engine::keypad::STATE state;
+        engine::keypad::key::State state;
         TRIGGER trigger;
     };
 
     keycode_item_t stack[4];
 
-    void KeymatrixHandlerAdp5585::push_wheel_turn(const TRIGGER _trigger, const engine::keypad::STATE _state)
+    void KeymatrixHandlerAdp5585::push_wheel_turn(const TRIGGER _trigger, const engine::keypad::key::State _state)
     {
         if (_trigger != stack[3].trigger)
         {
@@ -33,10 +33,10 @@ namespace platform::hardware
 
         auto cleanup_stack = [&]()
         {
-            stack[0].state = engine::keypad::STATE::UNDEFINED;
-            stack[1].state = engine::keypad::STATE::UNDEFINED;
-            stack[2].state = engine::keypad::STATE::UNDEFINED;
-            stack[3].state = engine::keypad::STATE::UNDEFINED;
+            stack[0].state = engine::keypad::key::State::UNDEFINED;
+            stack[1].state = engine::keypad::key::State::UNDEFINED;
+            stack[2].state = engine::keypad::key::State::UNDEFINED;
+            stack[3].state = engine::keypad::key::State::UNDEFINED;
             stack[0].trigger = TRIGGER::UNDEFINED;
             stack[1].trigger = TRIGGER::UNDEFINED;
             stack[2].trigger = TRIGGER::UNDEFINED;
@@ -45,10 +45,10 @@ namespace platform::hardware
 
         auto check_state = [&]()
         {
-            return (stack[0].state == engine::keypad::STATE::PRESS &&
-                    stack[1].state == engine::keypad::STATE::PRESS &&
-                    stack[2].state == engine::keypad::STATE::RELEASE &&
-                    stack[3].state == engine::keypad::STATE::RELEASE)
+            return (stack[0].state == engine::keypad::key::State::PRESS &&
+                    stack[1].state == engine::keypad::key::State::PRESS &&
+                    stack[2].state == engine::keypad::key::State::RELEASE &&
+                    stack[3].state == engine::keypad::key::State::RELEASE)
                        ? true
                        : false;
         };
@@ -60,8 +60,8 @@ namespace platform::hardware
             check_state())
         {
             cleanup_stack();
-            engine::keypad::switch_key(engine::keypad::KEY_ID::KEY_70, engine::keypad::STATE::PRESS);
-            engine::keypad::switch_key(engine::keypad::KEY_ID::KEY_70, engine::keypad::STATE::RELEASE);
+            engine::keypad::switch_key(engine::keypad::key::Identifier::KEY_70, engine::keypad::key::State::PRESS);
+            engine::keypad::switch_key(engine::keypad::key::Identifier::KEY_70, engine::keypad::key::State::RELEASE);
         }
         else if (stack[0].trigger == TRIGGER::DN &&
                  stack[1].trigger == TRIGGER::UP &&
@@ -70,8 +70,8 @@ namespace platform::hardware
                  check_state())
         {
             cleanup_stack();
-            engine::keypad::switch_key(engine::keypad::KEY_ID::KEY_71, engine::keypad::STATE::PRESS);
-            engine::keypad::switch_key(engine::keypad::KEY_ID::KEY_71, engine::keypad::STATE::RELEASE);
+            engine::keypad::switch_key(engine::keypad::key::Identifier::KEY_71, engine::keypad::key::State::PRESS);
+            engine::keypad::switch_key(engine::keypad::key::Identifier::KEY_71, engine::keypad::key::State::RELEASE);
         }
     }
 }
