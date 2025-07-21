@@ -3,6 +3,7 @@
 
 set(LIBRARY_SOURCE_LIST
     ${VARIKEY_LIBRARY_DIR}/engine/backlight/backlight.cpp
+    ${VARIKEY_LIBRARY_DIR}/engine/backlight/light_channel_control.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/display/display.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/display/resources/display_font.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/display/resources/display_image.cpp
@@ -91,7 +92,7 @@ set(LIBRARY_SOURCE_LIST
     ${VARIKEY_LIBRARY_DIR}/varikey.cpp
 )
 
-if (${HARDWARE_IDENTIFIER} EQUAL 2 OR ${HARDWARE_IDENTIFIER} EQUAL 1)
+if(${HARDWARE_IDENTIFIER} EQUAL 2 OR ${HARDWARE_IDENTIFIER} EQUAL 1)
     list(APPEND LIBRARY_SOURCE_LIST
         ${VARIKEY_LIBRARY_DIR}/platform/hardware/keymatrix/chip/keymatrix_chip_component.cpp
         ${VARIKEY_LIBRARY_DIR}/platform/hardware/keymatrix/chip/keymatrix_chip.cpp
@@ -99,7 +100,7 @@ if (${HARDWARE_IDENTIFIER} EQUAL 2 OR ${HARDWARE_IDENTIFIER} EQUAL 1)
         ${VARIKEY_LIBRARY_DIR}/platform/hardware/keymatrix/chip/keymatrix_handler_type_gmc.cpp
         ${VARIKEY_LIBRARY_DIR}/platform/hardware/keymatrix/chip/keymatrix_handler_type_varikey.cpp
     )
-elseif (${HARDWARE_IDENTIFIER} EQUAL 3)
+elseif(${HARDWARE_IDENTIFIER} EQUAL 3)
     list(APPEND LIBRARY_SOURCE_LIST
         ${VARIKEY_LIBRARY_DIR}/platform/hardware/keymatrix/core/keymatrix_core_component.cpp
         ${VARIKEY_LIBRARY_DIR}/platform/hardware/keymatrix/core/keymatrix_core.cpp

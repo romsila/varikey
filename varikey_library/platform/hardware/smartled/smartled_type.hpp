@@ -10,7 +10,8 @@
 #include "revision.h"
 #include "smartled_type_gmc.hpp"
 #include "smartled_type_varikey.hpp"
-#include "smartled_type_varikey_15sbla.hpp"
+#include "smartled_type_varikey_15sbla_back.hpp"
+#include "smartled_type_varikey_15sbla_front.hpp"
 
 namespace platform::hardware
 {
@@ -20,28 +21,27 @@ namespace platform::hardware
         struct Entity
         {
             using Frontlight = platform::Undefined;
-            using Backlight = platform::Undefined;
         };
 
         template <>
         struct Entity<platform::defines::IDENTIFIER::VARIKEY_1_0>
         {
             using Frontlight = VarikeyPrototype;
-            using Backlight = VarikeyPrototype;
+            using Backlight = platform::Undefined;
         };
 
         template <>
         struct Entity<platform::defines::IDENTIFIER::VARIKEY_2_3>
         {
-            using Frontlight = VarikeyFront15SBLA;
-            using Backlight = VarikeyBack15SBLA;
+            using Frontlight = VarikeyFront15SblaFront;
+            using Backlight = VarikeyBack15SblaBack;
         };
 
         template <>
         struct Entity<platform::defines::IDENTIFIER::GMCI_1_0>
         {
-            using Frontlight = GMCI1;
-            using Backlight = GMCI1;
+            using Frontlight = Gmci;
+            using Backlight = platform::Undefined;
         };
     }
     using Frontlight = smartled::variant::Entity<platform::defines::IDENTIFIER(identity::hardware::IDENTIFIER)>::Frontlight;

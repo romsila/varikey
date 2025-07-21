@@ -11,8 +11,16 @@
 
 namespace platform::hardware::smartled
 {
-    struct VarikeyPrototype : public FrontChannel
+    struct VarikeyPrototype : public SmartLed
     {
+        const float LUM_R = 1.400;
+        const float LUM_G = 0.700;
+        const float LUM_B = 0.400;
+
+        const float LUM_R_FACTOR = 1.400;
+        const float LUM_G_FACTOR = 0.700;
+        const float LUM_B_FACTOR = 0.400;
+
         static const unsigned int PIO_PIN = 22;
         static const std::size_t LED_COUNT = 3;
 
@@ -20,5 +28,7 @@ namespace platform::hardware::smartled
             smartled::INDEX::FIRST,
             smartled::INDEX::SECOND,
             smartled::INDEX::THIRD>;
+
+        VarikeyPrototype() : SmartLed(0, PIO_PIN) {}
     };
 }
