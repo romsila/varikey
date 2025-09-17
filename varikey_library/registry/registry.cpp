@@ -116,9 +116,32 @@ namespace registry
             return;
         }
 
+        // Serial number: previously a FAILURE aborted entire initialization.
+        // We now attempt to auto-heal if invalid (all 0x00 or INVALID_VALUE) and continue.
         if (parameter::param_serial_number_load() == FAILURE)
         {
-            return;
+            // Attempt regeneration
+            parameter::serial_number::g_register.initialize();
+            // Persist regenerated serial; ignore store failure (will retry next boot)
+            parameter::param_serial_number_store();
+        }
+        else
+        {
+            // Additional runtime validation: check if all bytes are zero -> treat as invalid and regenerate
+            bool all_zero = true;
+            for (size_t i = 0; i < parameter::serial_number::SIZE; ++i)
+            {
+                if (parameter::serial_number::g_register.value[i] != 0x00)
+                {
+                    all_zero = false;
+                    break;
+                }
+            }
+            if (all_zero)
+            {
+                parameter::serial_number::g_register.initialize();
+                parameter::param_serial_number_store();
+            }
         }
 
         srand(*(uint16_t *)parameter::serial_number::g_register.value);
