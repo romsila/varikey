@@ -185,30 +185,30 @@ namespace engine::handler
                 engine::mount();
 
                 backlight::set_program(backlight::PROGRAM::CONST,
-                                       backlight::CHANNEL::FRONTLIGHT,
+                                       backlight::CHANNEL::TOP_LIGHT,
                                        engine::backlight::GLIMMER_COLOR,
                                        engine::backlight::GLIMMER_COLOR,
                                        0);
 
-                backlight::set_program(backlight::PROGRAM::TURBO, backlight::CHANNEL::BACKLIGHT, 0);
-                backlight::set_program(backlight::PROGRAM::MOUNT, backlight::CHANNEL::BACKLIGHT,
+                backlight::set_program(backlight::PROGRAM::TURBO, backlight::CHANNEL::BOTTOM_LIGHT, 0);
+                backlight::set_program(backlight::PROGRAM::MOUNT, backlight::CHANNEL::BOTTOM_LIGHT,
                                        registry::parameter::backlight::g_register.value.timeout);
                 break;
             case payload::gadget::FUNCTION::UNMOUNT:
                 engine::unmount();
 
-                backlight::set_program(backlight::PROGRAM::ALERT, backlight::CHANNEL::BACKLIGHT, 0);
+                backlight::set_program(backlight::PROGRAM::ALERT, backlight::CHANNEL::BOTTOM_LIGHT, 0);
                 break;
             case payload::gadget::FUNCTION::SUSPEND:
                 engine::suspend(registry::parameter::features::g_register.value.wakeup);
 
-                backlight::set_program(backlight::PROGRAM::SUSPEND, backlight::CHANNEL::BACKLIGHT, 0);
+                backlight::set_program(backlight::PROGRAM::SUSPEND, backlight::CHANNEL::BOTTOM_LIGHT, 0);
                 break;
             case payload::gadget::FUNCTION::RESUME:
                 engine::resume();
 
-                backlight::set_program(backlight::PROGRAM::TURBO, backlight::CHANNEL::BACKLIGHT, 0);
-                backlight::set_program(backlight::PROGRAM::MOUNT, backlight::CHANNEL::BACKLIGHT,
+                backlight::set_program(backlight::PROGRAM::TURBO, backlight::CHANNEL::BOTTOM_LIGHT, 0);
+                backlight::set_program(backlight::PROGRAM::MOUNT, backlight::CHANNEL::BOTTOM_LIGHT,
                                        registry::parameter::backlight::g_register.value.timeout);
                 break;
             default:

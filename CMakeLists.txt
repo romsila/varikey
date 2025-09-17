@@ -25,6 +25,9 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 set(CMAKE_BUILD_TYPE Debug)
 
+include(CTest)
+enable_testing()
+
 pico_sdk_init()
 
 add_compile_options(
@@ -39,6 +42,7 @@ add_compile_options(
     -Waddress
     #-Wpedantic
     #-fpack-struct
+    -g
 )
 
 if (NOT HARDWARE_PLATFORM)
@@ -101,7 +105,8 @@ configure_file(${SCRIPTS_DIR}/revision.h.in ${VARIKEY_LIBRARY_DIR}/revision.h @O
 include(${SCRIPTS_DIR}/graffiti.cmake)
   
 add_executable(${EXECUTABLE_NAME}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/firmware.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/firmware.cpp
+)
 
 add_dependencies(${EXECUTABLE_NAME} ascii_art)
 

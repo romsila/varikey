@@ -7,26 +7,26 @@
 #include <assert.h>
 #include <stdio.h>
 
+#include "backlight_channel_control.hpp"
 #include "backlight_color.hpp"
 #include "board_assembly.hpp"
-#include "light_channel_control.hpp"
 #include "smartled_color.hpp"
 
 namespace engine::backlight
 {
-    void LightChannelControl::initialize(void)
+    void ChannelControl::initialize(void)
     {
         light_chain.status = INITIALIZED;
     }
 
-    void LightChannelControl::set_program(const PROGRAM _mode, const uint64_t _delay_ms)
+    void ChannelControl::set_program(const PROGRAM _mode, const uint64_t _delay_ms)
     {
         assert(light_chain.status == INITIALIZED);
         light_chain.next_program = _mode;
         light_chain.next_delay_ms = _delay_ms;
     }
 
-    void LightChannelControl::perform(void)
+    void ChannelControl::perform(void)
     {
         assert(light_chain.status == INITIALIZED);
 
@@ -43,15 +43,15 @@ namespace engine::backlight
         switch (light_chain.program)
         {
         case PROGRAM::MEDIUM:
-            perform_step(100);
+            perform_step(25);
             program_switch();
             break;
         case PROGRAM::SLOW:
-            perform_step(500);
+            perform_step(50);
             program_switch();
             break;
         case PROGRAM::TURBO:
-            perform_step(10);
+            perform_step(5);
             program_switch();
             break;
         case PROGRAM::ALERT:
@@ -68,15 +68,15 @@ namespace engine::backlight
             perform_step(BLINK_ALERT);
             break;
         case PROGRAM::MOUNT:
-            if (light_chain.right.current == Settings::MOUNTED_BACKLIGHT_RIGHT)
+            if (light_chain.right.current == Settings::MOUNTED_COLOR_RIGHT)
             {
-                set_left(Settings::MOUNTED_BACKLIGHT_RIGHT);
-                set_right(Settings::MOUNTED_BACKLIGHT_LEFT);
+                set_left(Settings::MOUNTED_COLOR_RIGHT);
+                set_right(Settings::MOUNTED_COLOR_LEFT);
             }
             else
             {
-                set_left(Settings::MOUNTED_BACKLIGHT_LEFT);
-                set_right(Settings::MOUNTED_BACKLIGHT_RIGHT);
+                set_left(Settings::MOUNTED_COLOR_LEFT);
+                set_right(Settings::MOUNTED_COLOR_RIGHT);
             }
             perform_step(BLINK_MOUNT);
             break;
@@ -114,7 +114,7 @@ namespace engine::backlight
         }
     }
 
-    void LightChannelControl::set_left(const uint8_t r, const uint8_t g, const uint8_t b)
+    void ChannelControl::set_left(const uint8_t r, const uint8_t g, const uint8_t b)
     {
         assert(light_chain.status == INITIALIZED);
 
@@ -124,7 +124,7 @@ namespace engine::backlight
         light_chain.left.value.increment = 0;
     }
 
-    void LightChannelControl::set_right(const uint8_t r, const uint8_t g, const uint8_t b)
+    void ChannelControl::set_right(const uint8_t r, const uint8_t g, const uint8_t b)
     {
         assert(light_chain.status == INITIALIZED);
 
@@ -134,7 +134,7 @@ namespace engine::backlight
         light_chain.right.value.increment = 0;
     }
 
-    void LightChannelControl::morph_left(const uint8_t r, const uint8_t g, const uint8_t b)
+    void ChannelControl::morph_left(const uint8_t r, const uint8_t g, const uint8_t b)
     {
         assert(light_chain.status == INITIALIZED);
 
@@ -144,7 +144,7 @@ namespace engine::backlight
         light_chain.left.value.increment = 1;
     }
 
-    void LightChannelControl::morph_right(const uint8_t r, const uint8_t g, const uint8_t b)
+    void ChannelControl::morph_right(const uint8_t r, const uint8_t g, const uint8_t b)
     {
         assert(light_chain.status == INITIALIZED);
 
@@ -154,44 +154,7 @@ namespace engine::backlight
         light_chain.right.value.increment = 1;
     }
 
-    /*
-        void LightChannelControl::set_smartled(const Color &_left, const Color &_right)
-        {
-            constexpr float brightness_back = 0.25f;
-
-            constexpr size_t backlight_count = platform::hardware::Backlight::LED_COUNT;
-            static_assert(backlight_count >= 2, "Need at least two LEDs.");
-
-            Color backlight_colors[backlight_count];
-
-            for (size_t i = 0; i < backlight_count; ++i)
-            {
-                float t = static_cast<float>(i) / (backlight_count - 1); // t ∈ [0, 1]
-
-                backlight_colors[i].rgb.r = static_cast<uint8_t>((_left.rgb.r + t * (_right.rgb.r - _left.rgb.r)) * brightness_back);
-                backlight_colors[i].rgb.g = static_cast<uint8_t>((_left.rgb.g + t * (_right.rgb.g - _left.rgb.g)) * brightness_back);
-                backlight_colors[i].rgb.b = static_cast<uint8_t>((_left.rgb.b + t * (_right.rgb.b - _left.rgb.b)) * brightness_back);
-            }
-            platform::board::assembly.backlight.set_led_sequence(backlight_colors);
-
-            constexpr float brightness_front = 0.25f;
-            constexpr size_t frontlight_count = platform::hardware::Frontlight::LED_COUNT;
-            static_assert(frontlight_count >= 2, "Need at least two LEDs.");
-
-            Color frontlight_colors[frontlight_count];
-            for (size_t i = 0; i < frontlight_count; ++i)
-            {
-                float t = static_cast<float>(i) / (frontlight_count - 1); // t ∈ [0, 1]
-
-                frontlight_colors[i].rgb.r = static_cast<uint8_t>((_left.rgb.r + t * (_right.rgb.r - _left.rgb.r)) * brightness_front);
-                frontlight_colors[i].rgb.g = static_cast<uint8_t>((_left.rgb.g + t * (_right.rgb.g - _left.rgb.g)) * brightness_front);
-                frontlight_colors[i].rgb.b = static_cast<uint8_t>((_left.rgb.b + t * (_right.rgb.b - _left.rgb.b)) * brightness_front);
-            }
-            platform::board::assembly.frontlight.set_led_sequence(frontlight_colors);
-        }
-    */
-
-    void LightChannelControl::perform_step(const int _delay)
+    void ChannelControl::perform_step(const int _delay)
     {
         static uint64_t timestamp = platform::board::assembly.soc.get_stopwatch();
         const uint64_t current_time = platform::board::assembly.soc.get_stopwatch();
@@ -329,7 +292,7 @@ namespace engine::backlight
         }
     }
 
-    void LightChannelControl::program_switch()
+    void ChannelControl::program_switch()
     {
         static int program_id = 0;
         const int program_size = sizeof(program) / sizeof(program_t);

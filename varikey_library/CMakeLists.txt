@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 
 set(LIBRARY_SOURCE_LIST
+    ${VARIKEY_LIBRARY_DIR}/engine/backlight/backlight_channel_control.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/backlight/backlight.cpp
-    ${VARIKEY_LIBRARY_DIR}/engine/backlight/light_channel_control.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/display/display.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/display/resources/display_font.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/display/resources/display_image.cpp
@@ -60,9 +60,9 @@ set(LIBRARY_SOURCE_LIST
     ${VARIKEY_LIBRARY_DIR}/engine/keypad/keypad_modifiers.cpp
     ${VARIKEY_LIBRARY_DIR}/engine/keypad/keypad.cpp
     ${VARIKEY_LIBRARY_DIR}/platform/board/board_assembly.cpp
-    ${VARIKEY_LIBRARY_DIR}/platform/hardware/smartled/smartled.cpp
     ${VARIKEY_LIBRARY_DIR}/platform/hardware/display/display_oled_128x32.cpp
     ${VARIKEY_LIBRARY_DIR}/platform/hardware/display/ssd1306.cpp
+    ${VARIKEY_LIBRARY_DIR}/platform/hardware/smartled/smartled.cpp
     ${VARIKEY_LIBRARY_DIR}/platform/hardware/soc/rp2040/rp2040_gpio.cpp
     ${VARIKEY_LIBRARY_DIR}/platform/hardware/soc/rp2040/rp2040_soc.cpp
     ${VARIKEY_LIBRARY_DIR}/platform/hardware/soc/rp2040/rp2040_stopwatch.cpp

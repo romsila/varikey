@@ -20,7 +20,7 @@ namespace engine::backlight
     using Color = platform::hardware::smartled::Color;
     using SmartLed = platform::hardware::smartled::SmartLed;
 
-    struct LightChannelControl
+    struct ChannelControl
     {
         using SetSmartLedFunc = std::function<void(const Color &, const Color &)>;
 
@@ -74,14 +74,14 @@ namespace engine::backlight
         static const int BLINK_MOUNT = Settings::BLINK_MOUNT_TIMEOUT;
         static const int BLINK_SUSPEND = Settings::BLINK_SUSPEND_TIMEOUT;
 
-        LightChannelControl() = delete;
-        LightChannelControl(const LightChannelControl &) = delete;
-        LightChannelControl &operator=(const LightChannelControl &) = delete;
-        LightChannelControl(LightChannelControl &&) = delete;
-        LightChannelControl &operator=(LightChannelControl &&) = delete;
+        ChannelControl() = delete;
+        ChannelControl(const ChannelControl &) = delete;
+        ChannelControl &operator=(const ChannelControl &) = delete;
+        ChannelControl(ChannelControl &&) = delete;
+        ChannelControl &operator=(ChannelControl &&) = delete;
 
-        LightChannelControl(SetSmartLedFunc setter)
-            : set_smartled_func(setter) {}
+        ChannelControl(SetSmartLedFunc _function)
+            : set_smartled_func(_function) {}
 
         void initialize(void);
         void perform(void);
@@ -102,7 +102,6 @@ namespace engine::backlight
         void morph_left(const uint8_t r, const uint8_t g, const uint8_t b);
         void morph_right(const uint8_t r, const uint8_t g, const uint8_t b);
 
-        // void set_smartled(const Color &_left, const Color &_right);
         void perform_step(const int _delay);
         void program_switch();
     };

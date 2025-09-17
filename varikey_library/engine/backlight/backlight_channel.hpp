@@ -12,8 +12,8 @@ namespace engine::backlight
 {
     enum class CHANNEL : uint8_t
     {
-        FRONTLIGHT = 0x00,
-        BACKLIGHT = 0x01,
+        TOP_LIGHT = 0x00,
+        BOTTOM_LIGHT = 0x01,
         UNDEFINED = 0xff,
     };
 }

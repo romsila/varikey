@@ -21,8 +21,8 @@ namespace registry::parameter::backlight
     void register_t::initialize(void)
     {
         value.program = engine::backlight::Settings::DEFAULT_MODE;
-        value.left = engine::backlight::Settings::MOUNTED_BACKLIGHT_LEFT;
-        value.right = engine::backlight::Settings::MOUNTED_BACKLIGHT_RIGHT;
+        value.left = engine::backlight::Settings::MOUNTED_COLOR_LEFT;
+        value.right = engine::backlight::Settings::MOUNTED_COLOR_RIGHT;
         value.timeout = engine::backlight::Settings::DEFAULT_MOUNT_TIMEOUT;
     }
 

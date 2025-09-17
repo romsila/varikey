@@ -8,6 +8,7 @@
 
 #include "component_interface.hpp"
 #include "smartled.hpp"
+#include "smartled_layer.hpp"
 #include "smartled_mapper.hpp"
 
 namespace platform::hardware::smartled
@@ -43,14 +44,16 @@ namespace platform::hardware::smartled
             SmartLed::shutdown<Mapper>();
         }
 
-        void set_smartled(const Color &_left, const Color &_right)
+        void set_led_chain(const Color &_left, const Color &_right)
         {
-            SmartLed::set_smartled<Mapper>(_left, _right);
+            SmartLed::set_led_chain<Mapper>(_left, _right, layer);
         }
 
         void set_led_sequence(const Color (&colors)[Mapper::mapping.size()])
         {
             SmartLed::set_led_sequence<VarikeyBack15SblaBack::Mapper>(colors);
         }
+
+        Layer<Mapper> layer;
     };
 }

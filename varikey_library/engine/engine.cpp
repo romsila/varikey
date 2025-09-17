@@ -222,11 +222,11 @@ namespace engine
 
     static void start_device_application()
     {
-        backlight::set_program(backlight::PROGRAM::CONST, backlight::CHANNEL::FRONTLIGHT,
+        backlight::set_program(backlight::PROGRAM::CONST, backlight::CHANNEL::TOP_LIGHT,
                                engine::backlight::GLIMMER_COLOR,
                                engine::backlight::GLIMMER_COLOR,
                                0);
-        backlight::set_program(backlight::PROGRAM::TURBO, backlight::CHANNEL::BACKLIGHT, 0);
+        backlight::set_program(backlight::PROGRAM::TURBO, backlight::CHANNEL::BOTTOM_LIGHT, 0);
 
         display::set_cursor(0, 0);
         display::draw(engine::Variant::LOGO);
@@ -237,8 +237,8 @@ namespace engine
 
     static void stop_device_application()
     {
-        backlight::set_program(backlight::PROGRAM::OFF, backlight::CHANNEL::BACKLIGHT, 0);
-        backlight::set_program(backlight::PROGRAM::OFF, backlight::CHANNEL::FRONTLIGHT, 0);
+        backlight::set_program(backlight::PROGRAM::OFF, backlight::CHANNEL::BOTTOM_LIGHT, 0);
+        backlight::set_program(backlight::PROGRAM::OFF, backlight::CHANNEL::TOP_LIGHT, 0);
         display::clean();
     }
 }

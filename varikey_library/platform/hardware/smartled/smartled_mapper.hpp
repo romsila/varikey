@@ -31,7 +31,8 @@ namespace platform::hardware::smartled
         SEVENTEENTH,
         EIGHTEENTH,
         NINETEENTH,
-        TWENTIETH
+        TWENTIETH,
+        NUMBER_OF_MAPPED_VALUES
     };
 
     template <INDEX... MappedOrder>

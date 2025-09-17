@@ -9,9 +9,9 @@
 #include <stdint.h>
 
 #include "backlight_channel.hpp"
+#include "backlight_channel_control.hpp"
 #include "backlight_program.hpp"
 #include "backlight_settings.hpp"
-#include "light_channel_control.hpp"
 #include "smartled_color.hpp"
 
 namespace engine::backlight

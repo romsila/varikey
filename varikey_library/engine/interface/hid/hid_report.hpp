@@ -76,7 +76,7 @@ namespace engine::hid
         UNDEFINED = (int)common::result::UNDEFINED,
     };
 
-    struct get_report_t
+    struct __attribute__((__packed__)) get_report_t
     {
         GET_REPORT report;
         RESULT result;

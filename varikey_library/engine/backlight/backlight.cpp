@@ -15,22 +15,21 @@
 
 namespace
 {
-    engine::backlight::LightChannelControl front_channel_control{
+    engine::backlight::ChannelControl front_channel_control{
         [](const engine::backlight::Color &l, const engine::backlight::Color &r)
         {
-            platform::board::assembly.frontlight.set_smartled(l, r);
+            platform::board::assembly.frontlight.set_led_chain(l, r);
         }};
 
-    engine::backlight::LightChannelControl back_channel_control{
+    engine::backlight::ChannelControl back_channel_control{
         [](const engine::backlight::Color &l, const engine::backlight::Color &r)
         {
-            platform::board::assembly.backlight.set_smartled(l, r);
+            platform::board::assembly.backlight.set_led_chain(l, r);
         }};
 }
 
 namespace engine::backlight
 {
-
     extern void initialize(void)
     {
         front_channel_control.initialize();
@@ -41,11 +40,11 @@ namespace engine::backlight
     {
         assert(_channel != CHANNEL::UNDEFINED);
 
-        if (_channel == CHANNEL::FRONTLIGHT)
+        if (_channel == CHANNEL::TOP_LIGHT)
         {
             front_channel_control.set_program(_program, _delay_ms);
         }
-        else if (_channel == CHANNEL::BACKLIGHT)
+        else if (_channel == CHANNEL::BOTTOM_LIGHT)
         {
             back_channel_control.set_program(_program, _delay_ms);
         }
@@ -59,13 +58,13 @@ namespace engine::backlight
     {
         assert(_channel != CHANNEL::UNDEFINED);
 
-        if (_channel == CHANNEL::FRONTLIGHT)
+        if (_channel == CHANNEL::TOP_LIGHT)
         {
             front_channel_control.set_left(_left);
             front_channel_control.set_right(_right);
             front_channel_control.set_program(_program, _delay_ms);
         }
-        else if (_channel == CHANNEL::BACKLIGHT)
+        else if (_channel == CHANNEL::BOTTOM_LIGHT)
         {
             back_channel_control.set_left(_left);
             back_channel_control.set_right(_right);

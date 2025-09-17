@@ -16,6 +16,9 @@
 #include <pico/time.h>
 
 #include "smartled_color.hpp"
+#include "smartled_layer.hpp"
+#include "smartled_mapper.hpp"
+
 #include "ws2812.pio.h"
 
 namespace platform::hardware::smartled
@@ -62,23 +65,55 @@ namespace platform::hardware::smartled
         void put_pixel(uint8_t r, uint8_t g, uint8_t b);
 
         template <typename Mapper>
-        void set_smartled(const Color &_left, const Color &_right)
+        void set_led_chain(const Color &_left, const Color &_right, Layer<Mapper> layer)
         {
             constexpr float brightness_back = 0.25f;
 
-            constexpr size_t led_count = Mapper::mapping.size();
-            static_assert(led_count >= 2, "Need at least two LEDs.");
+            constexpr size_t LED_COUNT = Mapper::mapping.size();
+            static_assert(LED_COUNT >= 2, "Need at least two LEDs.");
 
-            Color led_colors[led_count];
+            Color led_colors[LED_COUNT];
 
-            for (size_t i = 0; i < led_count; ++i)
+            for (size_t i = 0; i < LED_COUNT; ++i)
             {
-                float t = static_cast<float>(i) / (led_count - 1); // t ∈ [0, 1]
+                float t = static_cast<float>(i) / (LED_COUNT - 1); // t ∈ [0, 1]
 
                 led_colors[i].rgb.r = static_cast<uint8_t>((_left.rgb.r + t * (_right.rgb.r - _left.rgb.r)) * brightness_back);
                 led_colors[i].rgb.g = static_cast<uint8_t>((_left.rgb.g + t * (_right.rgb.g - _left.rgb.g)) * brightness_back);
                 led_colors[i].rgb.b = static_cast<uint8_t>((_left.rgb.b + t * (_right.rgb.b - _left.rgb.b)) * brightness_back);
             }
+
+            // Layer<Mapper> layer;
+            for (size_t i = 0; i < LED_COUNT; ++i)
+            {
+                Color base = led_colors[i];
+
+                const auto &item = layer.buffer[i];
+
+                switch (item.mode)
+                {
+                case Layer<Mapper>::BlendMode::REPLACE:
+                    base = item.color;
+                    break;
+                case Layer<Mapper>::BlendMode::ADD:
+                    base.rgb.r = std::min(255, base.rgb.r + static_cast<int>(item.color.rgb.r * item.opaque));
+                    base.rgb.g = std::min(255, base.rgb.g + static_cast<int>(item.color.rgb.g * item.opaque));
+                    base.rgb.b = std::min(255, base.rgb.b + static_cast<int>(item.color.rgb.b * item.opaque));
+                    break;
+                case Layer<Mapper>::BlendMode::SUBSTRACT:
+                    base.rgb.r = std::max(0, base.rgb.r - static_cast<int>(item.color.rgb.r * item.opaque));
+                    base.rgb.g = std::max(0, base.rgb.g - static_cast<int>(item.color.rgb.g * item.opaque));
+                    base.rgb.b = std::max(0, base.rgb.b - static_cast<int>(item.color.rgb.b * item.opaque));
+                    break;
+                case Layer<Mapper>::BlendMode::IGNORE:
+                    break;
+                default:
+                    break;
+                }
+
+                led_colors[i] = base;
+            }
+
             set_led_sequence<Mapper>(led_colors);
         }
 

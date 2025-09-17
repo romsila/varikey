@@ -8,6 +8,7 @@
 
 #include "component_interface.hpp"
 #include "smartled.hpp"
+#include "smartled_layer.hpp"
 #include "smartled_mapper.hpp"
 
 namespace platform::hardware::smartled
@@ -48,7 +49,10 @@ namespace platform::hardware::smartled
             smartled::INDEX::ELEVENTH,
             smartled::INDEX::FOURTEENTH>;
 
-        VarikeyFront15SblaFront() : SmartLed(0, PIO_PIN) {} // State machine index for front light channel
+        VarikeyFront15SblaFront() : SmartLed(0, PIO_PIN)
+        {
+            //layer.buffer[static_cast<int>(smartled::INDEX::FOURTEENTH)] = {Color{0xff, 0, 0}, Layer<Mapper>::BlendMode::REPLACE, 1.0f};
+        }
 
         virtual void initialize() override
         {
@@ -60,15 +64,16 @@ namespace platform::hardware::smartled
             SmartLed::shutdown<Mapper>();
         }
 
-        void set_smartled(const Color &_left, const Color &_right)
+        void set_led_chain(const Color &_left, const Color &_right)
         {
-            SmartLed::set_smartled<Mapper>(_left, _right);
+            SmartLed::set_led_chain<Mapper>(_left, _right, layer);
         }
 
         void set_led_sequence(const Color (&colors)[Mapper::mapping.size()])
         {
             SmartLed::set_led_sequence<VarikeyFront15SblaFront::Mapper>(colors);
         }
-    };
 
+        Layer<Mapper> layer;
+    };
 }

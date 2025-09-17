@@ -24,7 +24,7 @@ namespace engine::payload::temperature
         UNDEFINED = to_underlying(payload::IDENTIFIER::UNDEFINED),
     };
 
-    struct content_t
+    struct __attribute__((packed)) content_t
     {
         FUNCTION function;
         float value;
