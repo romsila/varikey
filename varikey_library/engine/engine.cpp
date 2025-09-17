@@ -216,6 +216,29 @@ namespace engine
 
     static void tick(void)
     {
+        /*
+        static uint32_t counter = 0;
+        counter++;
+        if ((counter == 1000))
+        {
+            backlight::set_program(backlight::PROGRAM::ALERT, backlight::CHANNEL::TOP_LIGHT, 10);
+            backlight::set_program(backlight::PROGRAM::ALERT, backlight::CHANNEL::BOTTOM_LIGHT, 10);
+        }
+        else if (counter >= 2000)
+        {
+            counter = 0;
+            backlight::set_program(backlight::PROGRAM::CONST, backlight::CHANNEL::TOP_LIGHT,
+                                   engine::backlight::GLIMMER_COLOR,
+                                   engine::backlight::GLIMMER_COLOR,
+                                   0);
+            backlight::set_program(backlight::PROGRAM::TURBO, backlight::CHANNEL::BOTTOM_LIGHT, 0);
+        }
+        else
+        {
+            counter = 5000;
+        }
+        */
+
         platform::board::assembly.perform();
         perform();
     }

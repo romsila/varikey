@@ -6,13 +6,13 @@
 
 #include <tusb.h>
 
-#include "smartled_color.hpp"
 #include "board_assembly.hpp"
 #include "engine_event_handler.hpp"
 #include "engine_gpio.hpp"
 #include "hid_report.hpp"
 #include "keypad.hpp"
 #include "registry_defines.hpp"
+#include "smartled_color.hpp"
 #include "usb_descriptors.hpp"
 
 namespace engine::hid
@@ -56,14 +56,19 @@ namespace engine::hid
             switch (set_report.report)
             {
             case SET_REPORT::BACKLIGHT:
+            {
+
+                payload::backlight::content_t tmp = set_report.backlight;
+
                 using PROGRAM = engine::backlight::PROGRAM;
-                if (set_report.backlight.program == PROGRAM::SET ||
-                    set_report.backlight.program == PROGRAM::MORPH)
+                if (tmp.program == PROGRAM::SET ||
+                    tmp.program == PROGRAM::MORPH)
                 {
                     const handler::event_t event = {
                         .identifier = payload::IDENTIFIER::BACKLIGHT,
                         .backlight = {
                             .program = set_report.backlight.program,
+                            .channel = engine::backlight::CHANNEL::BOTTOM_LIGHT,
                             .left = {.rgb = {
                                          .r = set_report.backlight.left.rgb.r,
                                          .g = set_report.backlight.left.rgb.g,
@@ -83,12 +88,14 @@ namespace engine::hid
                         .identifier = payload::IDENTIFIER::BACKLIGHT,
                         .backlight = {
                             .program = set_report.backlight.program,
+                            .channel = engine::backlight::CHANNEL::BOTTOM_LIGHT,
                             .left = {0},
                             .right = {0},
                         }};
                     handler::event_queue.push(event);
                 }
                 break;
+            }
             case SET_REPORT::DISPLAY:
                 switch (set_report.display.function)
                 {
